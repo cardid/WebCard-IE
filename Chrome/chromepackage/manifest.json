@@ -1,0 +1,9 @@
+{
+  "name": "WebCard",
+  "version": "${FBSTRING_PLUGIN_VERSION}",
+  "description": "Smart Card Browser Plugin",
+
+	"plugins": [
+    { "path": "npWebCard.dll", "public": true }
+  ]
+}
