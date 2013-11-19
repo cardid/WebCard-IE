@@ -40,14 +40,15 @@ add_windows_plugin(${PROJECT_NAME} SOURCES)
 # still work. Your cert should only be on the build machine and shouldn't be in
 # source control!
 # -- uncomment lines below this to enable signing --
-#firebreath_sign_plugin(${PROJECT_NAME}
-#    "${CMAKE_CURRENT_SOURCE_DIR}/sign/certificate.pfx"
-#    "${CMAKE_CURRENT_SOURCE_DIR}/sign/passphrase.txt"
-#    "http://timestamp.verisign.com/scripts/timestamp.dll")
+firebreath_sign_plugin(${PROJECT_NAME}
+    "${CMAKE_CURRENT_SOURCE_DIR}/../sign/certificate.pfx"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../sign/passphrase.txt"
+    "http://time.certum.pl")
 
 # add library dependencies here; leave ${PLUGIN_INTERNAL_DEPS} there unless you know what you're doing!
 target_link_libraries(${PROJECT_NAME}
     ${PLUGIN_INTERNAL_DEPS}
+    winscard.lib
     )
 
 set(WIX_HEAT_FLAGS

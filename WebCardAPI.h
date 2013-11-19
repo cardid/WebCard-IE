@@ -10,9 +10,12 @@
 #include "JSAPIAuto.h"
 #include "BrowserHost.h"
 #include "WebCard.h"
+#include "Reader.h"
 
 #ifndef H_WebCardAPI
 #define H_WebCardAPI
+
+FB_FORWARD_PTR(Reader);
 
 class WebCardAPI : public FB::JSAPIAuto
 {
@@ -31,14 +34,12 @@ public:
     WebCardAPI(const WebCardPtr& plugin, const FB::BrowserHostPtr& host) :
         m_plugin(plugin), m_host(host)
     {
-        registerMethod("echo",      make_method(this, &WebCardAPI::echo));
-        registerMethod("testEvent", make_method(this, &WebCardAPI::testEvent));
+        registerMethod("listen",      make_method(this, &WebCardAPI::listen));
         
-        // Read-write property
-        registerProperty("testString",
+        // Read-only property
+        registerProperty("readers",
                          make_property(this,
-                                       &WebCardAPI::get_testString,
-                                       &WebCardAPI::set_testString));
+                                       &WebCardAPI::get_readers));
         
         // Read-only property
         registerProperty("version",
@@ -53,32 +54,45 @@ public:
     ///         the browser is done with it; this will almost definitely be after
     ///         the plugin is released.
     ///////////////////////////////////////////////////////////////////////////////
-    virtual ~WebCardAPI() {};
+    virtual ~WebCardAPI() {
+		ReleaseReaders();
+	};
 
     WebCardPtr getPlugin();
 
-    // Read/Write property ${PROPERTY.ident}
-    std::string get_testString();
-    void set_testString(const std::string& val);
+    // Read-only property ${PROPERTY.ident}
+	FB::JSObjectPtr get_readers();
 
     // Read-only property ${PROPERTY.ident}
     std::string get_version();
 
-    // Method echo
-    FB::variant echo(const FB::variant& msg);
+    // Method listen
+    FB::variant listen(const FB::variant& msg);
     
     // Event helpers
-    FB_JSAPI_EVENT(test, 0, ());
-    FB_JSAPI_EVENT(echo, 2, (const FB::variant&, const int));
+    FB_JSAPI_EVENT(cardpresent, 1, (const FB::variant&));
+	FB_JSAPI_EVENT(statuschange, 1, (const FB::variant&));
 
-    // Method test-event
-    void testEvent();
+	void InitializeReaders();
+	void ReleaseReaders();
+
+protected:
+	void threadRun();
 
 private:
     WebCardWeakPtr m_plugin;
     FB::BrowserHostPtr m_host;
 
-    std::string m_testString;
+	SCARDCONTEXT m_hContext;
+	LPTSTR  m_pmszReaders;
+#ifdef _WINDOWS
+	LPSCARD_READERSTATE m_rgReaderStates;
+#else
+	LPSCARD_READERSTATE_A m_rgReaderStates;
+#endif
+	int m_cReaders;
+	FB::JSObjectPtr m_readers;
+	boost::thread m_thread;
 };
 
 #endif // H_WebCardAPI
