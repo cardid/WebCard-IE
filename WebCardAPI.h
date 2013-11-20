@@ -67,7 +67,7 @@ public:
     std::string get_version();
 
     // Method listen
-    FB::variant listen(const FB::variant& msg);
+    void listen(const FB::variant& readers);
     
     // Event helpers
     FB_JSAPI_EVENT(cardpresent, 1, (const FB::variant&));
