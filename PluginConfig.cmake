@@ -7,7 +7,7 @@
 
 set(PLUGIN_NAME "WebCard")
 set(PLUGIN_PREFIX "WCA")
-set(COMPANY_NAME "cardid_org")
+set(COMPANY_NAME "cardid.org")
 
 # ActiveX constants:
 set(FBTYPELIB_NAME WebCardLib)
@@ -46,7 +46,7 @@ set(FBSTRING_PluginDescription "Smart Card Browser Plugin")
 set(FBSTRING_PLUGIN_VERSION "0.6.8")
 set(FBSTRING_LegalCopyright "Copyright 2013 cardid.org")
 set(FBSTRING_PluginFileName "np${PLUGIN_NAME}")
-set(FBSTRING_ProductName "WebCard")
+set(FBSTRING_ProductName "Smart Card Browser Plugin")
 set(FBSTRING_FileExtents "")
 if ( FB_PLATFORM_ARCH_32 )
     set(FBSTRING_PluginName "WebCard")  # No 32bit postfix to maintain backward compatability.

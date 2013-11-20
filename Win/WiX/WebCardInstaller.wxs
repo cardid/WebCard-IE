@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Product Id="*" Name="${FBSTRING_PluginName}" Language="1033" Version="${FBSTRING_PLUGIN_VERSION}" Manufacturer="${FBSTRING_CompanyName}" UpgradeCode="{${FBControl_WixUpgradeCode_GUID}}">
-        <Package InstallerVersion="200" Compressed="yes" Description="Installer for the ${FBSTRING_PluginName} plugin" InstallScope="perUser" />
+        <Package InstallerVersion="200" Compressed="yes" Description="${FBSTRING_ProductName}" InstallScope="perUser" />
         <Upgrade Id="{${FBControl_WixUpgradeCode_GUID}}">
             <UpgradeVersion
                 Property="OLD_VERSION_FOUND"
@@ -72,5 +72,7 @@
             <ComponentRef Id="CompanyDirComp"/>
             <ComponentGroupRef Id="PluginDLLGroup"/>
         </Feature>
+      <Icon Id="icon.ico" SourceFile="${CMAKE_CURRENT_SOURCE_DIR}/Win/card.ico"/>
+      <Property Id="ARPPRODUCTICON" Value="icon.ico" />
     </Product>
 </Wix>
