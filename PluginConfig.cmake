@@ -7,7 +7,7 @@
 
 set(PLUGIN_NAME "WebCard")
 set(PLUGIN_PREFIX "WCA")
-set(COMPANY_NAME "cardid.org")
+set(COMPANY_NAME "cardid")
 
 # ActiveX constants:
 set(FBTYPELIB_NAME WebCardLib)
@@ -33,15 +33,15 @@ else ( FB_PLATFORM_ARCH_32 )
 endif ( FB_PLATFORM_ARCH_32 )
 
 # these are the pieces that are relevant to using it from Javascript
-set(ACTIVEX_PROGID "cardid_org.WebCard")
+set(ACTIVEX_PROGID "cardid.WebCard")
 if ( FB_PLATFORM_ARCH_32 )
-    set(MOZILLA_PLUGINID "cardid.org/WebCard")  # No 32bit postfix to maintain backward compatability.
+    set(MOZILLA_PLUGINID "cardid/WebCard")  # No 32bit postfix to maintain backward compatability.
 else ( FB_PLATFORM_ARCH_32 )
-    set(MOZILLA_PLUGINID "cardid.org/WebCard_${FB_PLATFORM_ARCH_NAME}")
+    set(MOZILLA_PLUGINID "cardid/WebCard_${FB_PLATFORM_ARCH_NAME}")
 endif ( FB_PLATFORM_ARCH_32 )
 
 # strings
-set(FBSTRING_CompanyName "cardid.org")
+set(FBSTRING_CompanyName "CardID.org")
 set(FBSTRING_PluginDescription "Smart Card Browser Plugin")
 set(FBSTRING_PLUGIN_VERSION "0.6.8")
 set(FBSTRING_LegalCopyright "Copyright 2013 cardid.org")
