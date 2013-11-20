@@ -43,7 +43,7 @@ endif ( FB_PLATFORM_ARCH_32 )
 # strings
 set(FBSTRING_CompanyName "cardid.org")
 set(FBSTRING_PluginDescription "Smart Card Browser Plugin")
-set(FBSTRING_PLUGIN_VERSION "1.0.0.0")
+set(FBSTRING_PLUGIN_VERSION "0.6.8")
 set(FBSTRING_LegalCopyright "Copyright 2013 cardid.org")
 set(FBSTRING_PluginFileName "np${PLUGIN_NAME}")
 set(FBSTRING_ProductName "WebCard")

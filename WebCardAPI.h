@@ -45,6 +45,8 @@ public:
         registerProperty("version",
                          make_property(this,
                                        &WebCardAPI::get_version));
+
+        InitializeReaders();
     }
 
     ///////////////////////////////////////////////////////////////////////////////
