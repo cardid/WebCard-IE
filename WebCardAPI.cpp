@@ -41,11 +41,6 @@ std::string WebCardAPI::get_version()
     return FBSTRING_PLUGIN_VERSION;
 }
 
-void WebCardAPI::listen(const FB::variant& readers)
-{
-
-}
-
 void WebCardAPI::InitializeReaders()
 {
 	LONG    lRet = 0;

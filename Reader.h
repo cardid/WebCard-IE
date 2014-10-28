@@ -12,6 +12,8 @@
 #ifndef H_Reader
 #define H_Reader
 
+
+FB_FORWARD_PTR(Reader);
 class Reader : public FB::JSAPIAuto
 {
 #ifdef _WINDOWS

@@ -15,7 +15,6 @@
 #ifndef H_WebCardAPI
 #define H_WebCardAPI
 
-FB_FORWARD_PTR(Reader);
 
 class WebCardAPI : public FB::JSAPIAuto
 {
@@ -34,8 +33,6 @@ public:
     WebCardAPI(const WebCardPtr& plugin, const FB::BrowserHostPtr& host) :
         m_plugin(plugin), m_host(host)
     {
-        registerMethod("listen",      make_method(this, &WebCardAPI::listen));
-        
         // Read-only property
         registerProperty("readers",
                          make_property(this,
@@ -68,9 +65,6 @@ public:
     // Read-only property ${PROPERTY.ident}
     std::string get_version();
 
-    // Method listen
-    void listen(const FB::variant& readers);
-    
     // Event helpers
     FB_JSAPI_EVENT(cardpresent, 1, (const FB::variant&));
 	FB_JSAPI_EVENT(statuschange, 1, (const FB::variant&));

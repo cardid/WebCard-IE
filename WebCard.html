@@ -53,7 +53,10 @@
     function InitCard(reader) {
         reader.connect(2); // 1-Exclusive, 2-Shared
         $("#log").append("ATR : " + reader.atr + "\r\n");
-        var apdu = '00A404000BA000000308000010000100';
+        var apdu = "FFCA000000";
+        resp = reader.transcieve(apdu);
+        $("#log").append("UID : " + resp + "\r\n");
+        apdu = '00A404000BA000000308000010000100';
         var resp = reader.transcieve(apdu);
         $("#log").append("FIPS-201 : " + resp + "\r\n");
         apdu = "00A404000E315041592E5359532E4444463031";
