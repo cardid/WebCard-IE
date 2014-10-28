@@ -38,7 +38,7 @@ cards are inserted or removed
 </script>
 ```
 
-ˋreader_listˋ is a collection of ˋreaderˋ objects. The event also passes a ˋreaderˋ 
+`reader_list` is a collection of `reader` objects. The event also passes a `reader` 
 parameter.
 
 ```
