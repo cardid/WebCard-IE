@@ -1,10 +1,9 @@
-Smart Card Browser Plugin
-=========================
+# Smart Card Browser Plugin
 
-This component allows a Web page to interact with a smart card. You can download a signed version visiting http://plugin.cardid.org/
+This component allows a Web page to interact with a smart card. You can download a 
+signed version visiting http://plugin.cardid.org/
 
-Usage
------
+## Usage
 
 Insert the plugin in the web page
 
@@ -14,7 +13,8 @@ Insert the plugin in the web page
 </object>
 ```
 
-When the plugin loads you have a collection of readers, and events are fired when cards are inserted or removed
+When the plugin loads you have a collection of readers, and events are fired when 
+cards are inserted or removed
 
 ```
 <script type="text/javascript">
@@ -38,7 +38,8 @@ When the plugin loads you have a collection of readers, and events are fired whe
 </script>
 ```
 
-_reader_list_ is a collection of _reader_ objects. The event also passes a _reader_ parameter.
+ˋreader_listˋ is a collection of ˋreaderˋ objects. The event also passes a ˋreaderˋ 
+parameter.
 
 ```
 reader.name;             // The name of the reader
@@ -49,7 +50,29 @@ reader.transcieve(apdu); // Use this to send an APDU to the card hex encoded
 reader.disconnect();     // Disconnect from the card when done
 ```
 
-Development
------------
+## Contributing
 
-The plugin uses the Firebreath (http://github.com/Firebreath) framework and provides a minimal wrapper around the basic smart card functions from the <a href="http://www.pcscworkgroup.com/">PC/SC framework</a>
+The plugin uses the [FireBreath](http://github.com/firebreath/FireBreath) framework 
+and provides a minimal wrapper around the basic smart card functions from the 
+[PC/SC Framework](http://www.pcscworkgroup.com)
+
+To build locally, first clone the FireBreath project and make sure that you follow 
+the instructions, read the blogs, ask in StackOverflow until you can build a basic 
+plugin. Once your build environment is working, clone WebCard in your local 
+Firebreath Projects folder and build it.
+
+## License
+
+   Copyright 2012-2014 Adrian Castillo
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
