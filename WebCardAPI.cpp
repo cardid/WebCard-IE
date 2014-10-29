@@ -139,7 +139,7 @@ void WebCardAPI::threadRun()
 				if ((m_rgReaderStates[i].dwCurrentState & SCARD_STATE_EMPTY) &&
 					(m_rgReaderStates[i].dwEventState & SCARD_STATE_PRESENT))
 				{
-					for (int c = 0; c < m_rgReaderStates[i].cbAtr; c++)
+					for (DWORD c = 0; c < m_rgReaderStates[i].cbAtr; c++)
 					{
 						pbTmp[0] = ((m_rgReaderStates[i].rgbAtr[c] & 0xF0) > 0x90) ? (((m_rgReaderStates[i].rgbAtr[c] & 0xF0) >> 4) + 'A' - 10) : (((m_rgReaderStates[i].rgbAtr[c] & 0xF0) >> 4) + '0');
 						pbTmp[1] = ((m_rgReaderStates[i].rgbAtr[c] & 0x0F) > 0x09) ? ((m_rgReaderStates[i].rgbAtr[c] & 0x0F) + 'A' - 10) : ((m_rgReaderStates[i].rgbAtr[c] & 0x0F) + '0');

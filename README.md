@@ -18,12 +18,8 @@ cards are inserted or removed
 
 ```
 <script type="text/javascript">
-  var reader_list;
-
   function pluginLoaded()
   {
-    reader_list = webcard.readers;
-
     if (webcard.attachEvent) {
       webcard.attachEvent("onstatuschange", scard_readerevent);
     } else { 
@@ -38,7 +34,7 @@ cards are inserted or removed
 </script>
 ```
 
-`reader_list` is a collection of `reader` objects. The event also passes a `reader` 
+`webcard.readers` is a collection of `reader` objects. The event also passes a `reader` 
 parameter.
 
 ```

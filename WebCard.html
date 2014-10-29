@@ -11,8 +11,7 @@
   <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>
 </head>
 <script type="text/javascript">
-    var reader_list;
-    var now_connected = false;
+    var nowConnected = false;
 
     function addEvent(obj, name, func)
     {
@@ -37,12 +36,12 @@
     function readerEvent(reader) {
         switch (reader.state & 0xf0) {
             case 0x10:  // SCARD_EMPTY
-                now_connected = false;
+                nowConnected = false;
                 $("#" + reader.name.replace(/\s/g, "").toLowerCase()).css("color", "black");
                 break;
             case 0x020: // SCARD_PRESENT
-                if (now_connected) break;
-                now_connected = true;
+                if (nowConnected) break;
+                nowConnected = true;
                 $("#" + reader.name.replace(/\s/g, "").toLowerCase()).css("color", "green");
                 setTimeout(InitCard(reader), 10);
                 break;
@@ -72,11 +71,8 @@
         $("#log").append("Loaded. Version: " + webcard.version + "\r\n");
         addEvent(webcard, "statuschange", readerEvent);
 
-        reader_list = webcard.readers;
-        var reader_count = reader_list.length;
-
-        for (var i = 0; i < reader_count; i++) {
-            $("#reader_list").append('<h3 id="' + reader_list[i].name.replace(/\s/g, "").toLowerCase() + '">' + reader_list[i].name + '</h3>');
+        for (var i = 0; i < webcard.readers.length; i++) {
+            $("#readerList").append('<h3 id="' + webcard.readers[i].name.replace(/\s/g, "").toLowerCase() + '">' + webcard.readers[i].name + '</h3>');
         }
     }
 
@@ -86,7 +82,7 @@
 </script>
 <body>
 <h1>Smart Card Browser Plugin</h1>
-<div id="reader_list"></div>
+<div id="readerList"></div>
 <textarea id="log" rows="10" cols="100"></textarea>
 <p>For this page to work you need to <a href="WebCard.msi">install WebCard</a></p>
 </body>

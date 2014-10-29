@@ -93,23 +93,6 @@ FB::JSAPIPtr WebCard::createJSAPI()
     return boost::make_shared<WebCardAPI>(FB::ptr_cast<WebCard>(shared_from_this()), m_host);
 }
 
-bool WebCard::onMouseDown(FB::MouseDownEvent *evt, FB::PluginWindow *)
-{
-    //printf("Mouse down at: %d, %d\n", evt->m_x, evt->m_y);
-    return false;
-}
-
-bool WebCard::onMouseUp(FB::MouseUpEvent *evt, FB::PluginWindow *)
-{
-    //printf("Mouse up at: %d, %d\n", evt->m_x, evt->m_y);
-    return false;
-}
-
-bool WebCard::onMouseMove(FB::MouseMoveEvent *evt, FB::PluginWindow *)
-{
-    //printf("Mouse move at: %d, %d\n", evt->m_x, evt->m_y);
-    return false;
-}
 bool WebCard::onWindowAttached(FB::AttachedEvent *evt, FB::PluginWindow *)
 {
     // The window is attached; act appropriately
