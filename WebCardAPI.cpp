@@ -146,17 +146,16 @@ void WebCardAPI::threadRun()
 						atr.append(pbTmp);
 					}
 					pReader->set_atr(atr);
+					fire_cardpresent(pReader);
 				}
 				else if ((m_rgReaderStates[i].dwCurrentState & SCARD_STATE_PRESENT) &&
 					(m_rgReaderStates[i].dwEventState & SCARD_STATE_EMPTY))
 				{
 					pReader->set_atr(atr);
+					fire_cardremoved(pReader);
 				}
 
 				m_rgReaderStates[i].dwCurrentState = m_rgReaderStates[i].dwEventState;
-
-				fire_statuschange(pReader);
-				m_host->htmlLog("SCardGetStatusChange");
 			}
 		}
 	}

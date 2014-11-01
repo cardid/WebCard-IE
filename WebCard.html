@@ -3,87 +3,80 @@
 <!-- The above comment makes IE treat this as a web page -->
 <html>
 <head>
-  <meta charset="utf-8">
   <title>WebCard Test Page</title>
   <style type="text/css">
-      body {margin: 60px; font: 12pt helvetica, arial, sans-serif;}
+    body {margin: 60px; font: 12pt helvetica, arial, sans-serif;}
   </style>
-  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>
 </head>
 <script type="text/javascript">
-    var nowConnected = false;
-
     function addEvent(obj, name, func)
     {
         if (obj.attachEvent) {
-          obj.attachEvent("on" + name, func);
-        } else { 
-          obj.addEventListener(name, func, false);
+            obj.attachEvent("on" + name, func);
+        } else {
+            obj.addEventListener(name, func, false); 
         }
     }
 
-    /* SCARD_STATE_IGNORE      0x00000001
-       SCARD_STATE_CHANGED     0x00000002
-       SCARD_STATE_UNKNOWN     0x00000004
-       SCARD_STATE_UNAVAILABLE 0x00000008
-       SCARD_STATE_EMPTY       0x00000010
-       SCARD_STATE_PRESENT     0x00000020
-       SCARD_STATE_ATRMATCH    0x00000040
-       SCARD_STATE_EXCLUSIVE   0x00000080
-       SCARD_STATE_INUSE       0x00000100
-       SCARD_STATE_MUTE        0x00000200
-       SCARD_STATE_UNPOWERED   0x00000400 */
-    function readerEvent(reader) {
-        switch (reader.state & 0xf0) {
-            case 0x10:  // SCARD_EMPTY
-                nowConnected = false;
-                $("#" + reader.name.replace(/\s/g, "").toLowerCase()).css("color", "black");
-                break;
-            case 0x020: // SCARD_PRESENT
-                if (nowConnected) break;
-                nowConnected = true;
-                $("#" + reader.name.replace(/\s/g, "").toLowerCase()).css("color", "green");
-                setTimeout(InitCard(reader), 10);
-                break;
-        }
-        $("#log").append(reader.name + ": 0x" + (reader.state & 0xfff0).toString(16) + "\r\n");
+    function log(data) {
+        document.getElementById("log").textContent += data + "\n";
     }
-
-    function InitCard(reader) {
-        reader.connect(2); // 1-Exclusive, 2-Shared
-        $("#log").append("ATR : " + reader.atr + "\r\n");
-        var apdu = "FFCA000000";
-        resp = reader.transcieve(apdu);
-        $("#log").append("UID : " + resp + "\r\n");
-        apdu = '00A404000BA000000308000010000100';
-        var resp = reader.transcieve(apdu);
-        $("#log").append("FIPS-201 : " + resp + "\r\n");
-        apdu = "00A404000E315041592E5359532E4444463031";
-        resp = reader.transcieve(apdu);
-        $("#log").append("EMV : " + resp + "\r\n");
-        apdu = "00A4040007A0000002471001";
-        resp = reader.transcieve(apdu);
-        $("#log").append("ICAO MRTD : " + resp + "\r\n");
-        reader.disconnect();
-     }
 
     function pluginLoaded() {
-        $("#log").append("Loaded. Version: " + webcard.version + "\r\n");
-        addEvent(webcard, "statuschange", readerEvent);
-
+        window.webcard = document.getElementById("webcard");
+        log("WebCard version " + webcard.version);
+        addEvent(webcard, "cardpresent", cardPresent);
+        addEvent(webcard, "cardremoved", cardRemoved);
         for (var i = 0; i < webcard.readers.length; i++) {
-            $("#readerList").append('<h3 id="' + webcard.readers[i].name.replace(/\s/g, "").toLowerCase() + '">' + webcard.readers[i].name + '</h3>');
+            var rdr = document.createElement("h3");
+            rdr.textContent = webcard.readers[i].name;
+            rdr.id = webcard.readers[i].name.replace(/\s/g, "").toLowerCase();
+            document.getElementById("readerList").appendChild(rdr);
         }
     }
 
-    $(document).ready(function () {
-        $("body").append('<object id="webcard" type="application/x-webcard" width="0" height="0"><param name="onload" value="pluginLoaded" /></object>');
-    });
+    function cardPresent(reader) {
+        document.getElementById(reader.name.replace(/\s/g, "").toLowerCase()).style.color = "green";
+        setTimeout(initCard(reader), 10);
+    }
+
+    function cardRemoved(reader) {
+        document.getElementById(reader.name.replace(/\s/g, "").toLowerCase()).style.color = "inherit";
+    }
+
+    function initCard(reader) {
+        reader.connect(2); // 1-Exclusive, 2-Shared
+        log("ATR : " + reader.atr);
+        var apdu = "FFCA000000";
+        var resp = reader.transcieve(apdu);
+        if (resp.substr(-4) == "9000") {
+          log("UID : " + resp.substr(0, resp.length - 4));            
+        }
+        apdu = '00A404000BA000000308000010000100';
+        resp = reader.transcieve(apdu);
+        if (resp.substr(-4) == "9000") {
+            log("FIPS 201 SP800-73 (PIV)");
+        }
+        apdu = "00A404000E315041592E5359532E4444463031";
+        resp = reader.transcieve(apdu);
+        if (resp.substr(-4) == "9000") {
+            log("EMV Payment Card");
+        }
+        apdu = "00A4040007A0000002471001";
+        resp = reader.transcieve(apdu);
+        if (resp.substr(-4) == "9000") {
+            log("ICAO Machine Readable Travel Document");
+        }
+        reader.disconnect();
+    }
 </script>
 <body>
+<object id="webcard" type="application/x-webcard" width="0" height="0">
+  <param name="onload" value="pluginLoaded" />
+</object><br />
 <h1>Smart Card Browser Plugin</h1>
 <div id="readerList"></div>
 <textarea id="log" rows="10" cols="100"></textarea>
-<p>For this page to work you need to <a href="WebCard.msi">install WebCard</a></p>
+<p>For this page to work you need to <a href="http://plugin.cardid.org/webcard.msi">install WebCard</a></p>
 </body>
 </html>

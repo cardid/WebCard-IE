@@ -67,7 +67,7 @@ public:
 
     // Event helpers
     FB_JSAPI_EVENT(cardpresent, 1, (const FB::variant&));
-	FB_JSAPI_EVENT(statuschange, 1, (const FB::variant&));
+	FB_JSAPI_EVENT(cardremoved, 1, (const FB::variant&));
 
 	void InitializeReaders();
 	void ReleaseReaders();
