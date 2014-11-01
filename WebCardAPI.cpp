@@ -86,7 +86,11 @@ void WebCardAPI::InitializeReaders()
 			m_readers->Invoke("push", FB::variant_list_of(newReader));
 			m_rgReaderStates[m_cReaders].pvUserData = (void*)(new ReaderPtr(newReader));
 			// Advance to the next value.
+#ifdef _WINDOWS
 			pReader = pReader + wcslen((wchar_t *)pReader) + 1;
+#else
+			pReader = pReader + strlen((char *)pReader) + 1;
+#endif
 			m_cReaders += 1;
 		}
 		m_thread = boost::thread(&WebCardAPI::threadRun, this);

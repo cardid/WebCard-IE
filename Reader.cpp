@@ -16,8 +16,8 @@ FB::variant Reader::transcieve(const FB::variant& apdu)
 	long	lr;
 	char*	pbTemp;
 	size_t	i;
-	char	pbSend[278];
-	char	pbRecv[278];
+	char	pbSend[MAX_APDU_SIZE];
+	char	pbRecv[MAX_APDU_SIZE];
 	size_t	cbSend;
 	size_t	cbRecv;
 	size_t  cbBlock;
@@ -49,7 +49,7 @@ FB::variant Reader::transcieve(const FB::variant& apdu)
 		m_host->htmlLog("Transcieve: (unknown)");
 	}
 
-	cbRecv = 278;
+	cbRecv = MAX_APDU_SIZE;
 	lr = SCardTransmit(m_hCard,
 		(m_dwAP == SCARD_PROTOCOL_T0) ? (SCARD_PCI_T0) : (SCARD_PCI_T1),
 		(LPCBYTE)pbSend, cbSend, NULL, (LPBYTE)pbRecv, (LPDWORD)&cbRecv);
@@ -80,7 +80,7 @@ FB::variant Reader::transcieve(const FB::variant& apdu)
 					memcpy(pbSend, "\x00\xC0\x00\x00", 4);
 					pbSend[4] = pbRecv[cbRecv - 1];
 					cbSend = 5;
-					cbRecv = 278;	// Including status bytes
+					cbRecv = MAX_APDU_SIZE;
 					lr = SCardTransmit(m_hCard,
 						(m_dwAP == SCARD_PROTOCOL_T0) ? (SCARD_PCI_T0) : (SCARD_PCI_T1),
 						(LPCBYTE)pbSend, cbSend, NULL, (LPBYTE)pbRecv, (LPDWORD)&cbRecv);
