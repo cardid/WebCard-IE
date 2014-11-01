@@ -1,0 +1,1 @@
+Drag and drop to copy the npWebCard.plugin to the Internet Plugins folder
