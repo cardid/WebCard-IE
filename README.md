@@ -20,6 +20,7 @@ when cards are inserted or removed
 ```
 <script type="text/javascript">
   function pluginLoaded() {
+    window.webcard = document.getElementById("webcard");
     if (webcard.attachEvent) {
       webcard.attachEvent("oncardpresent", cardPresent);
       webcard.attachEvent("oncardremoved", cardRemoved);
