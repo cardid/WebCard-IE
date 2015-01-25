@@ -78,7 +78,7 @@ FB::variant Reader::transcieve(const FB::variant& apdu)
 				if (pbRecv[cbRecv - 2] == 0x61)
 				{
 					memcpy(pbSend, "\x00\xC0\x00\x00", 4);
-					pbSend[4] = pbRecv[cbRecv - 1];
+					pbSend[4] = pbRecv[cbRecv - 1] == (byte)0x00 ? 0xFD : pbRecv[cbRecv - 1];
 					cbSend = 5;
 					cbRecv = MAX_APDU_SIZE;
 					lr = SCardTransmit(m_hCard,

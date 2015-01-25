@@ -12,7 +12,7 @@
 #ifndef H_Reader
 #define H_Reader
 
-#define MAX_APDU_SIZE 255
+#define MAX_APDU_SIZE 32767
 
 FB_FORWARD_PTR(Reader);
 class Reader : public FB::JSAPIAuto
