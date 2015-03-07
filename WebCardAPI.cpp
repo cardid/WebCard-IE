@@ -70,11 +70,10 @@ void WebCardAPI::InitializeReaders()
 		pReader = m_pmszReaders;
 		while ('\0' != *pReader)
 		{
-#ifdef _WINDOWS
+#if defined(linux) || defined(_WINDOWS)
 			m_rgReaderStates = (LPSCARD_READERSTATE)realloc((LPVOID)m_rgReaderStates, (m_cReaders + 1) * sizeof(SCARD_READERSTATE));
 #else
-			m_rgReaderStates = (LPSCARD_READERSTATE)realloc((LPVOID)m_rgReaderStates, (m_cReaders + 1) * sizeof(SCARD_READERSTATE));
-			// m_rgReaderStates = (LPSCARD_READERSTATE_A)realloc((LPVOID)m_rgReaderStates, (m_cReaders + 1) * sizeof(SCARD_READERSTATE_A));
+			m_rgReaderStates = (LPSCARD_READERSTATE_A)realloc((LPVOID)m_rgReaderStates, (m_cReaders + 1) * sizeof(SCARD_READERSTATE_A));
 #endif
 			m_rgReaderStates[m_cReaders].szReader = pReader;
 			m_rgReaderStates[m_cReaders].dwCurrentState = SCARD_STATE_UNAWARE;
