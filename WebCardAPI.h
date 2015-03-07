@@ -82,9 +82,10 @@ private:
 	SCARDCONTEXT m_hContext;
 	LPTSTR  m_pmszReaders;
 #ifdef _WINDOWS
-	LPSCARD_READERSTATE m_rgReaderStates;
+    LPSCARD_READERSTATE m_rgReaderStates;
 #else
-	LPSCARD_READERSTATE_A m_rgReaderStates;
+	LPSCARD_READERSTATE m_rgReaderStates;
+	// LPSCARD_READERSTATE_A m_rgReaderStates;
 #endif
 	int m_cReaders;
 	FB::JSObjectPtr m_readers;
