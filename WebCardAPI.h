@@ -81,8 +81,8 @@ private:
 
 	SCARDCONTEXT m_hContext;
 	LPTSTR  m_pmszReaders;
-#ifdef _WINDOWS
-	LPSCARD_READERSTATE m_rgReaderStates;
+#if defined(linux) || defined(_WINDOWS)
+    LPSCARD_READERSTATE m_rgReaderStates;
 #else
 	LPSCARD_READERSTATE_A m_rgReaderStates;
 #endif
