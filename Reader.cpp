@@ -54,6 +54,15 @@ FB::variant Reader::transcieve(const FB::variant& apdu)
 		(m_dwAP == SCARD_PROTOCOL_T0) ? (SCARD_PCI_T0) : (SCARD_PCI_T1),
 		(LPCBYTE)pbSend, cbSend, NULL, (LPBYTE)pbRecv, (LPDWORD)&cbRecv);
 
+	if (lr == SCARD_S_SUCCESS && pbRecv[cbRecv - 2] == 0x6C)
+	{
+		pbSend[4] = pbRecv[cbRecv - 1];
+		cbRecv = MAX_APDU_SIZE;
+		lr = SCardTransmit(m_hCard,
+			(m_dwAP == SCARD_PROTOCOL_T0) ? (SCARD_PCI_T0) : (SCARD_PCI_T1),
+			(LPCBYTE)pbSend, cbSend, NULL, (LPBYTE)pbRecv, (LPDWORD)&cbRecv);
+	}
+
 	if (lr == SCARD_S_SUCCESS)
 	{
 		apdu_resp = std::string();
